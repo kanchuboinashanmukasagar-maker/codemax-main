@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | CodeDaily</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const savedTheme = localStorage.getItem("codedaily-theme") || "dark";
+        document.documentElement.dataset.theme = savedTheme;
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="auth-body">
+    <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+    <section class="auth-card">
+        <div class="auth-header">
+            <span class="brand-mark">&lt;/&gt;</span>
+            <h1>Welcome back</h1>
+            <p>Log in to continue your daily coding streak.</p>
+        </div>
+        <form method="POST" class="auth-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="coder@example.com" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required>
+            
+            <button type="submit">Sign In</button>
+        </form>
+        {% if message %}<p class="form-message">{{ message }}</p>{% endif %}
+        <p class="auth-switch">New to CodeDaily? <a href="{{ url_for('register') }}">Create an account</a></p>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
