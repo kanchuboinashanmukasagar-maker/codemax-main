@@ -316,7 +316,118 @@ body::before {
     color: #fde68a;
 }
 
-/* Theme Picker */
+/* Theme Toggle Button (Sun & Moon) */
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.42rem 0.85rem;
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+    outline: none;
+    position: relative;
+    user-select: none;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-color-glow);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle-btn:active {
+    transform: translateY(0);
+}
+
+.theme-toggle-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+.theme-toggle-btn .sun-icon,
+.theme-toggle-btn .moon-icon {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+}
+
+/* Dark Theme: Moon is active & glowing, Sun hides */
+html[data-theme="dark"] .theme-toggle-btn .sun-icon,
+:root[data-theme="dark"] .theme-toggle-btn .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.3);
+    pointer-events: none;
+}
+
+html[data-theme="dark"] .theme-toggle-btn .moon-icon,
+:root[data-theme="dark"] .theme-toggle-btn .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: #c084fc;
+    filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.65));
+}
+
+/* Light Theme: Sun is active & glowing, Moon hides */
+html[data-theme="light"] .theme-toggle-btn .moon-icon,
+:root[data-theme="light"] .theme-toggle-btn .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.3);
+    pointer-events: none;
+}
+
+html[data-theme="light"] .theme-toggle-btn .sun-icon,
+:root[data-theme="light"] .theme-toggle-btn .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: #f59e0b;
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.65));
+}
+
+/* Focus Theme: Emerald Moon */
+html[data-theme="focus"] .theme-toggle-btn .sun-icon,
+:root[data-theme="focus"] .theme-toggle-btn .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.3);
+    pointer-events: none;
+}
+
+html[data-theme="focus"] .theme-toggle-btn .moon-icon,
+:root[data-theme="focus"] .theme-toggle-btn .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: #10b981;
+    filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.65));
+}
+
+.theme-toggle-label {
+    letter-spacing: 0.02em;
+}
+
+/* Auth Page Floating Theme Toggle */
+.auth-theme-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Legacy Theme Picker (if select is present) */
 .theme-picker {
     display: flex;
     align-items: center;

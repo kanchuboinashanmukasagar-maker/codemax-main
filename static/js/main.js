@@ -13,20 +13,49 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * 1. Theme Manager
+ * 1. Theme Manager & Toggle (Sun / Moon)
  */
 function initThemeManager() {
+    const themeToggles = document.querySelectorAll('#theme-toggle, .theme-toggle-btn');
     const themeSelect = document.getElementById('theme-select');
-    const currentTheme = document.documentElement.dataset.theme || localStorage.getItem('codedaily-theme') || 'dark';
-    document.documentElement.dataset.theme = currentTheme;
+    let currentTheme = document.documentElement.dataset.theme || localStorage.getItem('codedaily-theme') || 'dark';
+
+    function applyTheme(theme) {
+        currentTheme = theme;
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem('codedaily-theme', theme);
+
+        themeToggles.forEach((btn) => {
+            btn.setAttribute('data-current-theme', theme);
+            const label = btn.querySelector('.js-theme-label');
+            if (label) {
+                label.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+            }
+            const isDark = theme === 'dark';
+            btn.setAttribute('aria-label', `Current theme is ${theme}. Click to switch to ${isDark ? 'light' : 'dark'} mode.`);
+            btn.setAttribute('title', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+        });
+
+        if (themeSelect) {
+            themeSelect.value = theme;
+        }
+
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    }
+
+    applyTheme(currentTheme);
+
+    themeToggles.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(nextTheme);
+        });
+    });
 
     if (themeSelect) {
-        themeSelect.value = currentTheme;
         themeSelect.addEventListener('change', (e) => {
-            const newTheme = e.target.value;
-            document.documentElement.dataset.theme = newTheme;
-            localStorage.setItem('codedaily-theme', newTheme);
-            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: newTheme } }));
+            applyTheme(e.target.value);
         });
     }
 }
